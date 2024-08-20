@@ -61,7 +61,9 @@ def process_html_data(file_path, enrich=False, only_first_email=False):
     all_data = []
 
     rows = soup.find_all(class_='tabulator-row')
-    for row in rows:
+    total_rows = len(rows)
+    progress_bar = st.progress(0)
+    for i, row in enumerate(rows):
         cells = row.find_all(class_='tabulator-cell')
         email = cells[2].get_text(strip=True).split(',')[0] if only_first_email else cells[2].get_text(strip=True)
         website = cells[3].get_text(strip=True)
@@ -87,6 +89,8 @@ def process_html_data(file_path, enrich=False, only_first_email=False):
                         leads_enriched += 1
                 data_row.append(calculate_score(data_row))
                 all_data.append(data_row)
+        
+        progress_bar.progress((i + 1) / total_rows)
 
     df = pd.DataFrame(all_data, columns=['Nome', 'Categoria', 'Telefono', 'Email', 'Sito Web', 'Numero Recensioni', 'Valutazione Media', 'Score'])
     save_to_csv(all_data, 'all_leads.csv')
@@ -134,10 +138,11 @@ def streamlit_app():
     
     
     uploaded_file = st.file_uploader("Carica il tuo file HTML", type="html")
+    token = st.text_input("Inserisci il tuo token di accesso", type="password")
     col1, col2,col3 = st.columns(3)
     enrich_option = col1.checkbox("Arricchisci i dati visitando i siti web? 🌐")
     first_email_only = col2.checkbox("Prendo solo la prima email disponibile? 📧")
-    if col3.button("Elabora Dati 🔄"):
+    if col3.button("Elabora Dati 🔄") and token=="AleAI":
         with st.spinner('Elaborazione in corso...'):
             file_path = uploaded_file.name
             total_leads, leads_with_website, leads_with_contact_info, leads_enriched, leads_with_full_contact, data = process_html_data(file_path, enrich=enrich_option, only_first_email=first_email_only)
