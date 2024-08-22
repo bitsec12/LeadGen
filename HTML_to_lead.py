@@ -70,8 +70,9 @@ def process_html_data(file_path, enrich=False, only_first_email=False):
         data_row = [
             cells[0].get_text(strip=True), cells[13].get_text(strip=True),
             cells[1].get_text(strip=True), email,
-            f'[Visita]({website})' if website else '',
-            cells[14].get_text(strip=True), cells[15].get_text(strip=True) + ' ⭐'
+            website if website else '',
+            cells[14].get_text(strip=True) if cells[14].get_text(strip=True) else '0',
+            cells[15].get_text(strip=True) + ' ⭐' if cells[15].get_text(strip=True) else '0 ⭐'
         ]
         
         total_leads += 1
