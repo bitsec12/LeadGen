@@ -53,9 +53,9 @@ def calculate_score(row):
     return score
 
 
-def process_html_data(file_path, enrich=False, only_first_email=False):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        soup = BeautifulSoup(file, 'html.parser')
+def process_html_data(file, enrich=False, only_first_email=False):
+    
+    soup = BeautifulSoup(file, 'html.parser')
     
     total_leads = leads_with_contact_info = leads_enriched = leads_with_full_contact = leads_with_website = 0
     all_data = []
@@ -146,7 +146,7 @@ def streamlit_app():
     if col3.button("Elabora Dati 🔄") and token=="AleAI":
         with st.spinner('Elaborazione in corso...'):
             file_path = uploaded_file.name
-            total_leads, leads_with_website, leads_with_contact_info, leads_enriched, leads_with_full_contact, data = process_html_data(file_path, enrich=enrich_option, only_first_email=first_email_only)
+            total_leads, leads_with_website, leads_with_contact_info, leads_enriched, leads_with_full_contact, data = process_html_data(uploaded_file, enrich=enrich_option, only_first_email=first_email_only)
             cola, colb, colc, cold, cole = st.columns(5)
             st.success("Elaborazione completata con successo! 🎉")
             cola.metric("Lead Totali", total_leads)
