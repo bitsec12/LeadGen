@@ -100,47 +100,12 @@ def process_html_data(file, enrich=False, only_first_email=False):
 
 def streamlit_app():
     st.title("🚀 Lead Generator")
-    with st.expander("Tutorial: How to Install the Latest Google Maps Scraper"):
-        st.markdown("""
-        ### How to Install the Latest Google Maps Scraper
-
-        Follow this step-by-step guide to install the latest version of the scraper:
-        """)
-
-        st.write("#### 1. **Download the Latest Version (1.2.0):**")
-        st.markdown("""
-        Click the link below to download the latest version:
-        [Download google_maps_scraper_v1.2.0.zip](https://www.gmapsemailextractor.com/google_maps_scraper_v1.2.0.zip)
-        """)
-        st.image("https://www.gmapsemailextractor.com/_next/static/media/unzip.bcfa646d.png", caption="Example of downloaded file")
-
-        st.write("#### 2. **Unzip the Downloaded File:**")
-        st.image("https://www.gmapsemailextractor.com/_next/static/media/load_unpacked.3c1e9c2c.png", caption="Unzip the file")
-
-        st.write("#### 3. **Open the Chrome Extensions Page:**")
-        st.markdown("""
-        Open the extensions page, enable Developer Mode, and click 'Load unpacked'.
-        """)
-        st.image("https://www.gmapsemailextractor.com/_next/static/media/selectfiles.a4beb8b2.png", caption="Select the extension files")
-
-        st.write("#### 4. **Pin the Extension to the Chrome Toolbar:**")
-        st.image("https://www.gmapsemailextractor.com/_next/static/media/pin.93cc2a38.png", caption="Pin the extension")
-
-        st.write("#### 5. **Use the Extension to Find B2B Leads from Google Maps.**")
-        st.image("https://www.gmapsemailextractor.com/_next/static/media/popup.6c32e4a0.png", caption="Extension popup")
-
-        st.write("#### 6. **Example of Data Extracted from Google Maps: DO NOT export directly from the dashboard!**")
-        st.markdown("DO NOT export directly from the dashboard! Otherwise, you will have to pay again for the data.")
-        st.image("https://www.gmapsemailextractor.com/_next/static/media/demodata.9a54d092.png", caption="Sample data")
-
-        st.write("#### 7. **Save the Page Using CTRL-S and Upload It Here.**")
-
     uploaded_file = st.file_uploader("Upload your HTML file", type="html")
     token = st.text_input("Enter your access token", type="password")
     col1, col2, col3 = st.columns(3)
     enrich_option = col1.checkbox("Enrich data by visiting websites? 🌐")
     first_email_only = col2.checkbox("Use only the first available email? 📧")
-if col3.button("Process Data 🔄") and token == "mammata":
+    if col3.button("Process Data 🔄") and token == "mammata":
         with st.spinner('Processing...'):
             file_path = uploaded_file.name
             total_leads, leads_with_website, leads_with_contact_info, leads_enriched, leads_with_full_contact, data = process_html_data(uploaded_file, enrich=enrich_option, only_first_email=first_email_only)
