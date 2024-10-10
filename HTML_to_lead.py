@@ -99,7 +99,7 @@ def process_html_data(file, enrich=False, only_first_email=False):
     return total_leads, leads_with_website, leads_with_contact_info, leads_enriched, leads_with_full_contact, df
 
 def streamlit_app():
-    st.title("🚀 Lead Generator for Google Maps One-Time-Payment")
+    st.title("🚀 Lead Generator")
     with st.expander("Tutorial: How to Install the Latest Google Maps Scraper"):
         st.markdown("""
         ### How to Install the Latest Google Maps Scraper
@@ -140,7 +140,7 @@ def streamlit_app():
     col1, col2, col3 = st.columns(3)
     enrich_option = col1.checkbox("Enrich data by visiting websites? 🌐")
     first_email_only = col2.checkbox("Use only the first available email? 📧")
-    if col3.button("Process Data 🔄") and token == "WinAminosContest":
+if col3.button("Process Data 🔄") and token == "mammata":
         with st.spinner('Processing...'):
             file_path = uploaded_file.name
             total_leads, leads_with_website, leads_with_contact_info, leads_enriched, leads_with_full_contact, data = process_html_data(uploaded_file, enrich=enrich_option, only_first_email=first_email_only)
